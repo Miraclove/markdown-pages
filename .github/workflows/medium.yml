@@ -20,12 +20,10 @@ jobs:
             if [[ "${changed_file}" == "content/posts"* ]];
             then
               echo "File ${changed_file} matched post."
-              echo "::set-output name=post${i}::${changed_file}"
+              file_list+=${changed_file}
               ((i=i+1))
             fi
-          done
-      - id: set-matrix
-        run: echo "::set-output name=matrix::${steps.posts.outputs}"
+          echo "::set-output name=matrix::$file_list"
   publish:
     needs: build
     runs-on: ubuntu-latest
