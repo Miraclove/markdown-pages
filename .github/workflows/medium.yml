@@ -24,8 +24,6 @@ jobs:
         name: Publish to medium
         uses: infraway/post-medium-action@main
         with:
-          app_id: ${{ secrets.MEDIUM_APP_ID }}
-          app_secret: ${{ secrets.MEDIUM_APP_SECRET }}
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown_file: ${{ steps.posts.outputs.post0 }}
           base_url: https://pengwz.info
