@@ -21,10 +21,10 @@ jobs:
             if [[ "${changed_file}" == "content/posts"* ]];
             then
               echo "File ${changed_file} matched post."
-              file_list+=("$changed_file")
+              file_list+=("${changed_file}")
               ((i=i+1))
             fi
-            echo "${file_list}."
+            echo ${file_list[@]}
           echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
           done
   publish:
