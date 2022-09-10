@@ -25,6 +25,6 @@ jobs:
         uses: infraway/post-medium-action@main
         with:
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
-          markdown_file: /${{ steps.posts.outputs.post0 }}
+          markdown_file: ./${{ steps.posts.outputs.post0 }}
           base_url: https://pengwz.info
           post_url: https://pengwz.info/posts/
