@@ -1,25 +1,57 @@
+# name: publish-to-medium
+# on: [push]
+
+# jobs:
+#   post-to-medium:
+#     name: Post to Medium
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out reposity
+#         uses: actions/checkout@v2
+#       - name: Create Medium Post
+#         uses: philips-software/post-to-medium-action@v0.4.1
+#         with:
+#           integration_token: "${{ secrets.MEDIUM_ACCESS_TOKEN }}"
+#           file: "content/post.md"
+#           content_format: "markdown"
+#           notify_followers: "false"
+#           tags: "test,tag"
+#           title: "title"
+#           license: "all-rights-reserved"
+#           publish_status: "draft"
+
 name: publish-to-medium
 on: [push]
 
 jobs:
-  post-to-medium:
-    name: Post to Medium
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out reposity
         uses: actions/checkout@v2
-      - name: Create Medium Post
-        uses: philips-software/post-to-medium-action@v0.4.1
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+      - id: posts
+        name: Detecting posts from the changes
+        run: |
+          i=0
+          for changed_file in ${{ steps.files.outputs.added_modified }}; do
+            echo "Do something with ${changed_file}."
+            if [[ "${changed_file}" == "content/posts"* ]];
+            then
+              echo "File ${changed_file} matched post."
+              echo "::set-output name=post${i}::${changed_file}"
+              ((i=i+1))
+            fi
+          done
+      - if: steps.posts.outputs.post0
+        name: Publish to medium
+        uses: infraway/post-medium-action@main
         with:
-          integration_token: "${{ secrets.MEDIUM_ACCESS_TOKEN }}"
-          file: "content/post.md"
-          content_format: "markdown"
-          notify_followers: "false"
-          tags: "test,tag"
-          title: "title"
-          license: "all-rights-reserved"
-          publish_status: "draft"
-
+          access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
+          markdown_file: ${{ steps.posts.outputs.post0 }}
+          base_url: https://myblog.com
+          post_url: https://myblog.com/posts
 
 
 # name: publish-to-medium
