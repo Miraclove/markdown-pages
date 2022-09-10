@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
       - id: files
         uses: jitterbit/get-changed-files@v1
-      - id: posts
+      - id: set-matrix
         name: Detecting posts from the changes
         run: |
           i=0
@@ -24,7 +24,8 @@ jobs:
               file_list+=("$changed_file")
               ((i=i+1))
             fi
-          echo "::set-output name=matrix::${file_list}"
+            echo "${file_list}."
+          echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
   publish:
     needs: build
     runs-on: ubuntu-latest
