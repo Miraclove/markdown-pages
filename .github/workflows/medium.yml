@@ -26,6 +26,7 @@ jobs:
             fi
             echo "${file_list}."
           echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
+          done
   publish:
     needs: build
     runs-on: ubuntu-latest
