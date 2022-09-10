@@ -26,5 +26,5 @@ jobs:
         with:
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown_file: ${{ steps.posts.outputs.post0 }}
-          base_url: https://medium.com/@techpeng
-          post_url: https://medium.com/@techpeng
+          base_url: https://pengwz.info
+          post_url: https://pengwz.info/posts/
