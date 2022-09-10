@@ -15,15 +15,16 @@ jobs:
         name: Detecting posts from the changes
         run: |
           i=0
+          file_list=()
           for changed_file in ${{ steps.files.outputs.added_modified }}; do
             echo "Do something with ${changed_file}."
             if [[ "${changed_file}" == "content/posts"* ]];
             then
               echo "File ${changed_file} matched post."
-              file_list+=${changed_file}
+              file_list+=("$changed_file")
               ((i=i+1))
             fi
-          echo "::set-output name=matrix::$file_list"
+          echo "::set-output name=matrix::${file_list}"
   publish:
     needs: build
     runs-on: ubuntu-latest
