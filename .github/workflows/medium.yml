@@ -21,10 +21,15 @@ jobs:
             fi
           done
       - if: steps.posts.outputs.post0
-        name: Publish to medium
-        uses: infraway/post-medium-action@v1.5.0
+        name: Create Medium Post
+        uses: philips-software/post-to-medium-action@v0.4.1
         with:
-          access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
-          markdown_file: ${{ steps.posts.outputs.post0 }}
-          base_url: https://pengwz.info
-          post_url: https://pengwz.info/posts/
+          integration_token: "${{ secrets.MEDIUM_ACCESS_TOKEN }}"
+          file: ${{ steps.posts.outputs.post0 }}
+          content_format: "markdown"
+          notify_followers: "false"
+          tags: "test,tag"
+          title: "title"
+          license: "all-rights-reserved"
+          publish_status: "draft"
+        
