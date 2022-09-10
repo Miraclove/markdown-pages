@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: files
-        uses: jitterbit/get-changed-files@v1
+      uses: jitterbit/get-changed-files@v1
       - id: posts
         name: Detecting posts from the changes
         run: |
@@ -22,11 +22,9 @@ jobs:
           done
       - if: steps.posts.outputs.post0
         name: Publish to medium
-        uses: infraway/post-medium-action@main
+        uses: infraway/post-medium-action@v1.5.0
         with:
-          app_id: ${{ secrets.MEDIUM_APP_ID }}
-          app_secret: ${{ secrets.MEDIUM_APP_SECRET }}
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown_file: ${{ steps.posts.outputs.post0 }}
-          base_url: https://andrew.red
-          post_url: https://andrew.red/posts
+          base_url: https://medium.com/@techpeng
+          post_url: https://medium.com/@techpeng
