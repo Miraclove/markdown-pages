@@ -15,7 +15,7 @@ jobs:
         name: Detecting posts from the changes
         run: |
           i=0
-          file_list="["
+          file_list="\["
           for changed_file in ${{ steps.files.outputs.added_modified }}; do
             echo "Do something with ${changed_file}."
             if [[ "${changed_file}" == "content/posts"* ]];
@@ -24,8 +24,8 @@ jobs:
               file_list="${file_list}${changed_file},"
               ((i=i+1))
             fi
-          file_list="${file_list::-1}]"
-          echo ${file_list}
+          file_list="${file_list::-1}\]"
+          echo "{\"node\":${file_list}}"
           echo "::set-output name=matrix::{\"node\":${file_list}}"          
           done
   publish:
