@@ -22,7 +22,7 @@ jobs:
             if [[ "${changed_file}" == "content/posts"* ]];
             then
               echo "File ${changed_file} matched post."
-              file_list="$file_list$delim$changed_file"
+              file_list="$file_list$delim\"$changed_file\""
               delim=","
               ((i=i+1))
             fi
