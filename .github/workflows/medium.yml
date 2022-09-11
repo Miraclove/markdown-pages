@@ -36,7 +36,7 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.detect.outputs.matrix)}}
     steps:
-      - run: echo "Post file ${matrix.node}"
+      - run: echo ${{ matrix.node }}
       - name: Check out reposity
         uses: actions/checkout@v2
       - name: Publish to medium
