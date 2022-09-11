@@ -24,15 +24,15 @@ jobs:
               file_list+=("${changed_file}")
               ((i=i+1))
             fi
-            echo ${file_list[@]}
-          echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
+          echo ${file_list[@]}
+          echo "::set-output name=matrix::{\"node\":${file_list[@]}}"          
           done
   publish:
     needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        files: ${{fromJson(needs.job1.outputs.matrix)}}
+        files: ${{fromJson(needs.build.outputs.matrix)}}
     steps:
       - run: echo ${{ matrix.files }}
 
